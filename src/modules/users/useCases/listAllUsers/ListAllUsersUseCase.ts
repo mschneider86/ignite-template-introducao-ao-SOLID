@@ -1,5 +1,5 @@
-import { User } from "../../model/User";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
+import { User } from '../../model/User';
+import { IUsersRepository } from '../../repositories/IUsersRepository';
 
 interface IRequest {
   user_id: string;
@@ -8,8 +8,16 @@ interface IRequest {
 class ListAllUsersUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  execute({ user_id }: IRequest): User[] {
-    // Complete aqui
+  execute({ user_id }): User[] {
+    try {
+      const user = this.usersRepository.findById(user_id);
+      if (user && user.admin) {
+        return this.usersRepository.list();
+      }
+      throw new Error('');
+    } catch (error) {
+      throw new Error('');
+    }
   }
 }
 
